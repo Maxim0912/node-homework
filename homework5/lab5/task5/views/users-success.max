@@ -1,0 +1,10 @@
+<html>
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+    <h1>Success!</h1>
+    <h3>Login: {{data.login}}</h3>
+    <h3>Email: {{data.email}}</h3>
+</body>
+</html>
