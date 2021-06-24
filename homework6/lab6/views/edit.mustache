@@ -1,0 +1,29 @@
+{{>header}} 
+<div class="container">
+    <div class="py-2 text-center">
+        <h1>
+            {{title}}
+        </h1> 
+    </div>
+    <div class="container">
+        <div class="text-center mb-4">
+            <form method="POST" action="{{route_url}}/edit/{{data.id}}" enctype="application/x-www-form-urlencoded">
+                <p>
+                    Widget name: <input type="text" name="name" id="name" size="25" value = '{{data.name}}' onblur="if(value=='') value = '{{data.name}}'" onfocus="if(value=='{{data.name}}') value = ''"/>
+                </p>
+                <p>
+                    Widget Price: <input type="text" pattern="\d+(,\d{2})?" name="price" id="price" size="25" value = '{{data.price}}' onblur="if(value=='') value = '{{data.price}}'" onfocus="if(value=='{{data.price}}') value = ''"/>
+                </p>
+                <p>
+                    Widget Description: <br /><textarea name="desc" cols="40" rows="5" value = '{{data.desc}}' onblur="if(value=='') value = '{{data.desc}}'" onfocus="if(value=='{{data.desc}}') value = ''"></textarea>
+                <p>
+                    <input class="btn btn-primary" type="submit" name="submit" id="submit" value="Submit"/>
+                    <a href="{{route_url}}/"class="btn btn-secondary">
+                        Reset
+                    </a>
+                </p>
+            </form>
+        </div>
+    </div>
+</div>
+{{>footer}} 

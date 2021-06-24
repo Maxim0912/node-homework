@@ -1,0 +1,33 @@
+{{>header}}
+<div class="container">
+    <div class="py-2 text-center">
+        <h1>{{title}}</h1> 
+        <a href="{{route_url}}/add" class="btn btn-primary">Add new</a>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        {{#arrData}}
+        <div class="col-md-4">
+            <div class="card mb-4 box-shadow">
+                <div class="card-body">
+                    <p class="card-text">Name: {{name}}</p>
+                    <p class="card-text">Price: {{price}}</p>
+                    <p class="card-text">Description: {{desc}}</p>
+                    <p>
+                        <div class="btn-group">
+                            <a href="{{route_url}}/delete/{{id}}" class="btn btn-sm btn-outline-secondary">
+                                Delete
+                            </a>
+                            <a href="{{route_url}}/edit/{{id}}" class="btn btn-sm btn-outline-secondary">
+                                Edit
+                            </a>
+                        </div>
+                    </p>
+                </div>
+            </div>
+        </div>
+        {{/arrData}} 
+    </div>
+</div>
+{{>footer}}
