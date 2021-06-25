@@ -48,11 +48,16 @@ exports.delete = function(id, callback){
 };
 
 exports.edit = function(data, callback){
-    widgets[data.params.id - 1] = {
-        id: data.params.id,
-        name: data.body.name,
-        price: parseFloat(data.body.price) || 0,
-        desc: data.body.desc || ""
-    };
-    callback(null, widgets[data.params.id]);
+    for (let i = 0; i < widgets.length; i++) {
+        if (data.params.id == widgets[i].id) {
+            widgets[i] = {
+                id: parseInt(data.params.id),
+                name: data.body.name,
+                price: parseFloat(data.body.price) || 0,
+                desc: data.body.desc || ""
+            };
+            return callback(null, widgets[i])
+        };
+    }
+    callback(null, null);
 };
