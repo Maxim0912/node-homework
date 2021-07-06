@@ -1,0 +1,145 @@
+{{>header}}
+<div class="container">
+    <div class="py-2 text-center">
+        <h1>{{title}}</h1> 
+    </div>
+</div>
+<div class="container">
+    <div class="text-center mb-4">
+        <form id="submit" name="createTask" method="POST" action="/tasks" enctype="application/x-www-form-urlencoded">
+            <p>
+                Task Title: <input type="text" name="title" id="title" size="25" required />
+            </p>
+            <p>
+                Task Description: <br /><textarea name="description" cols="40" rows="5" placeholder="No description available"></textarea>
+            <p>
+                <input class="btn btn-primary" type="submit" name="submit" value="Submit"/>
+            </p>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        {{#arrData}}
+        <div class="col-md-4" name={{_id}}>
+            <div class="card mb-4 box-shadow">
+                <div class="card-body">
+                    <p class="card-text">Title: {{title}}</p>
+                    <p class="card-text">Description: {{description}}</p>
+                    <p>
+                        <input class="btn btn-primary btn-delete" type="button" id={{_id}} value="Delete"/>
+                    </p>
+                </div>
+            </div>
+        </div>
+        {{/arrData}} 
+    </div>
+</div>
+<script>
+
+const requestURL = '/tasks';
+const form = document.forms["createTask"];
+
+let element = document.getElementById('submit');
+let tasksToDelete = document.getElementsByClassName("btn-delete");
+
+
+for (let task of tasksToDelete) {
+    task.addEventListener('click', deleteTask)
+};
+
+element.addEventListener('submit', createNewTask);
+
+function deleteTask(event) {
+    fetch(requestURL, {
+        method: 'DELETE',
+        body: JSON.stringify({id: this.id}),
+        headers: {'Content-Type': 'application/json'}
+    }).then (response => {
+        if (response.ok) {
+            return response.json()
+        }
+    }).then (obj => {
+        removeDeletedTask(obj);
+    }).catch(error => {
+        const e = new Error('Something went wrong')
+        e.data = error
+        throw e
+    })
+};
+
+function createNewTask(event) {
+
+    event.preventDefault();
+    const title = form.elements["title"].value;
+    const description = form.elements["description"].value;
+    let card = {
+        title: title,
+        description: description
+    }        
+
+    fetch(requestURL, {
+        method: 'POST',
+        body: JSON.stringify(card),
+        headers: {'Content-Type': 'application/json'}
+    }).then (response => {
+        if (response.ok) {
+            return response.json()
+        }
+    }).then (obj => {
+        appendNewTask(document.getElementsByClassName("row")[0], obj);
+    }).catch(error => {
+        const e = new Error('Something went wrong')
+        e.data = error
+        throw e
+    })
+};
+
+function appendNewTask(where, obj) {
+    let row = document.getElementsByClassName("row")[0];
+    let first_div = document.createElement("div");
+    let second_div = document.createElement("div");
+    let third_div = document.createElement("div");
+    first_div.classList.add("col-md-4");
+    first_div.setAttribute("name", obj._id);
+    second_div.classList.add("card");
+    second_div.classList.add("mb-4");
+    second_div.classList.add("box-shadow");
+    third_div.classList.add("card-body");
+    let pTitle = document.createElement("p");
+    let pDescription = document.createElement("p");
+    let pButton = document.createElement("p");
+    let pInput = document.createElement("input");
+    pTitle.classList.add("card-text");
+    pDescription.classList.add("card-text");
+    pTitle.innerText = `Title: ${obj.title}`;
+    pDescription.innerText = `Description: ${obj.description}`;
+    pInput.classList.add("btn");
+    pInput.classList.add("btn-primary");
+    pInput.classList.add("btn-delete");
+    pInput.setAttribute("type", "button");
+    pInput.setAttribute("id", obj._id);
+    pInput.setAttribute("value", "Delete");
+    pInput.addEventListener("click", deleteTask);
+    pButton.append(pInput);
+    third_div.append(pTitle);
+    third_div.append(pDescription);
+    third_div.append(pButton);
+    second_div.append(third_div);
+    first_div.append(second_div);
+    
+    where.append(first_div);
+    cleanForm(form);
+}
+
+function removeDeletedTask(obj) {
+    let taskToRemove = document.getElementsByName(obj._id)[0];
+    taskToRemove.remove();
+}
+
+function cleanForm(form) {
+    form.reset()
+}
+
+</script>
+{{>footer}}
