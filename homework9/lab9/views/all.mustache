@@ -60,6 +60,7 @@ function deleteTask(event) {
             return response.json()
         }
     }).then (obj => {
+        console.log(obj);
         removeDeletedTask(obj);
     }).catch(error => {
         const e = new Error('Something went wrong')
@@ -87,6 +88,8 @@ function createNewTask(event) {
             return response.json()
         }
     }).then (obj => {
+        console.log(obj.title);
+        console.log(obj);
         appendNewTask(document.getElementsByClassName("row")[0], obj);
     }).catch(error => {
         const e = new Error('Something went wrong')
