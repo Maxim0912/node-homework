@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Крестики-нолики</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="game_field">
+    <h3>Крестики-нолики</h3>
+    <p id="1"></p>
+    <p id="2"></p>
+    <p id="3"></p>
+    <p id="4"></p>
+    <p id="5"></p>
+    <p id="6"></p>
+    <p id="7"></p>
+    <p id="8"></p>
+    <p id="9"></p>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+let socket = io.connect('http://localhost:8080');
+
+socket.on('all_moves', (data) => {
+    showPlayersChoise(data);
+})
+
+let allButtons = document.querySelectorAll("div > p");
+
+for (let task of allButtons) {
+    task.addEventListener("click", selectButton);
+};
+
+function selectButton() {
+    this.classList.add(socket.id);
+    this.innerText = "X";
+    let dataToSend = {
+        owner: socket.id,
+        elementId: +(this.id)
+    }
+    sendData(dataToSend);
+};
+
+function showPlayersChoise(dataFromServer) {
+    let position = document.getElementById(dataFromServer.elementId);
+    position.innerText = "X";
+    position.classList.add(dataFromServer.owner);
+} 
+
+function sendData(data) {
+	socket.emit('new_move', data);
+}
+
+</script>
+
+<button onclick="sendMessageToServer()">
+    Send message to server
+</button>
+</body>
+</html>

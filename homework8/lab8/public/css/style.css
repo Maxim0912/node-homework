@@ -1,0 +1,21 @@
+#game_field {
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#game_field p {
+    font-size: 50px;
+    background: red;
+    display: inline-block;
+    margin: 5px;
+    padding: 5px;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    color: white;
+}
+
+.painted {
+    background: black;
+}
