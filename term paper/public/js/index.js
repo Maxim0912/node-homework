@@ -17,6 +17,9 @@ successButton.addEventListener('click', retrieveSuccessTodos);
 const pendingButton = document.querySelector('.pending');
 pendingButton.addEventListener('click', retrievePendingTodos);
 
+const searchButton = document.querySelector('#elastic');
+searchButton.addEventListener('input', searhTodos);
+
 function updateData() {
 
     this.innerText == 'check_box' ? 
@@ -37,10 +40,6 @@ function getTodos() {
         resultsArr.forEach(element => {
             appendNewTodo(document.querySelector('.todo-wrapper'), element);            
         });
-        return resultsArr.length
-    }).then (result => {
-        const total = document.querySelector('.total');
-        total.innerText = `TOTAL: ${result}`;
     }).catch(error => {
         console.log(error);
         const e = new Error('Something went wrong')
@@ -51,7 +50,7 @@ function getTodos() {
 
 function createTodo() {
 
-    const input = document.querySelector('input');
+    const input = document.querySelector('#create-todo');
     const description = input.value;
     const date = getReadebleDate();
     let todo = {
@@ -188,7 +187,7 @@ function removeDeletedTodo(obj) {
 
 function cleanInput() {
 
-    document.querySelector('input').value = '';
+    document.querySelector('#create-todo').value = '';
 }
 
 function getReadebleDate() {
@@ -236,6 +235,36 @@ function retrievePendingTodos() {
         }
     
     }  
+}
+
+function searhTodos() {
+
+    let val = this.value.trim();
+    let allTodos = document.querySelectorAll('.todo-body');
+    if (val != '') {
+        allTodos.forEach(function(elem) {
+            if (elem.firstChild.innerText.search(val) == -1) {
+                elem.style.display = 'none';
+                elem.firstChild.innerHTML = elem.firstChild.innerText;
+            } 
+            else {
+
+                elem.style.removeProperty('display');
+                let str = elem.firstChild.innerText;
+                elem.firstChild.innerHTML = insertMark(str, elem.firstChild.innerText.search(val), val.length);
+            }
+        });
+    }
+    else {
+        allTodos.forEach(function(elem) {
+            elem.style.removeProperty('display');
+            elem.firstChild.innerHTML = elem.firstChild.innerText;
+        });
+    }
+}
+
+function insertMark(string, pos, len) {
+    return string.slice(0, pos) + '<mark>' + string.slice(pos, pos + len) + '</mark>' + string.slice(pos + len);
 }
 
 getTodos();

@@ -4,22 +4,19 @@
     <meta charset="UTF-8">
     <title>TODO-LIST</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/images/icons.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/flex-grid.css">
 </head>
 <body>
     <div class="todo-list">
-        <!-- <div class="title">TODO-LIST</div> -->
         <div class="top flex-row">
             <div class="title">TODO-LIST</div>
-            <div class="filters flex-row">
-                <div>
-                    FILTERS
-                </div>
-                <div class="material-icons filter">
-                    filter_list
+            <div class="search-todo">
+                <input type="text" placeholder="Search" id="elastic">
+                <div class="material-icons search">
+                    search
                 </div>
             </div>      
         </div>
@@ -31,7 +28,7 @@
             </div>
         </div>
         <div class="input-wrapper">
-            <input type="text" placeholder="Enter New To-Do">
+            <input type="text" placeholder="Enter New To-Do" id="create-todo">
             <span class="material-icons arrow">arrow_forward</span>
         </div>
         <div class="todo-wrapper flex-column">

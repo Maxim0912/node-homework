@@ -61,6 +61,7 @@ input[type=text] {
     border-radius: 0;
 }
 
+.search-todo,
 .input-wrapper {
     position: relative;
 }
@@ -70,6 +71,11 @@ input[type=text] {
     cursor: pointer;
 }
 
+.search-todo {
+    width: 150px;
+}
+
+.search,
 .arrow {
     position: absolute;
     right: 0;
@@ -101,40 +107,10 @@ input[type=text] {
     justify-content: space-between;
 }
 
-.filters,
 .clear-all {
     color: #10ccef;
     cursor: pointer;
-    /* margin-top: auto; */
-}
-
-.clear-all {
     margin-top: auto;
-}
-
-.filters {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    margin-top: 1.5rem;
-    margin-bottom: 0;
-    background-color: white;
-    min-width: 6vw;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-    transition: height 3s;
-    height: 20vh;
-}
-
-.hide {
-    min-height: 0;
-    min-width: 0;
-    padding: 0;
-    margin: 0;
 }
 
 @media screen and (max-width: 539px) {

@@ -14,7 +14,7 @@ app.use(express.static('public'));
 mongoClient.connect(function(err, client){
     if(err) return console.log(err);
     dbClient = client;
-    app.locals.collection = client.db('todos').collection('todo');;
+    app.locals.collection = client.db('todos').collection('todo');
     app.listen(3000, function(){
         console.log('http://localhost:3000');
     });
